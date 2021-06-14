@@ -1,13 +1,33 @@
 import bcrypt
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
 
 from backend.db import db
 
-themes = db.Table(
-    'event_themes',
-    db.Column('event_id', db.Integer, db.ForeignKey('events.id'), primary_key=True),
-    db.Column('theme_id', db.Integer, db.ForeignKey('themes.id'), primary_key=True)
+
+event_theme = db.Table(
+    'event_theme',
+    db.Column('theme_id', db.Integer, db.ForeignKey('themes.id')),
+    db.Column('event_id', db.Integer, db.ForeignKey('events.id'))
 )
+#
+# class EventThemeModel(db.Model):
+#     __tablename__ = 'event_themes'
+#
+#     theme_id = db.Column(db.Integer, db.ForeignKey('themes.id'), primary_key=True)
+#     event_id = db.Column(db.Integer, db.ForeignKey('events.id'), primary_key=True)
+#
+#     theme = db.relationship(
+#         'ThemeModel',
+#         lazy='subquery',
+#         backref=db.backref('event', lazy=True)
+#     )
+#
+#     event = db.relationship(
+#         "EventModel",
+#         uselist=False,
+#         lazy="subquery",
+#     )
 
 
 class EventModel(db.Model):
@@ -23,12 +43,7 @@ class EventModel(db.Model):
 
     creator = db.relationship('UserModel', backref=db.backref('event', lazy=True))
 
-    themes = db.relationship(
-        'ThemeModel',
-        secondary=themes,
-        lazy='subquery',
-        backref=db.backref('event', lazy=True)
-    )
+    themes = relationship('ThemeModel', secondary=event_theme, backref='events')
 
     city = db.relationship(
         "CityModel",
