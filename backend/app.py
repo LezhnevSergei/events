@@ -8,6 +8,8 @@ from flask_jwt_extended import JWTManager
 
 from backend.api.v1 import api as v1
 from backend.db import db
+from backend.db.halpers import config_base
+from backend.db.models import ThemeModel, CityModel
 
 
 class FlaskEncoder(json.JSONEncoder):
@@ -37,10 +39,11 @@ jwt = JWTManager(app)
 db.init_app(app)
 migrate = Migrate(app, db)
 
-db.create_all(app=app)
+with app.app_context():
+    db.create_all(app=app)
+    config_base(db)
 
 app.register_blueprint(v1, url_prefix="/api/v1")
-
 
 if __name__ == '__main__':
     app.run(debug=True)
