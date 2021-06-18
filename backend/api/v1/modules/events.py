@@ -6,8 +6,6 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from backend.api.v1.constructors import Constructor
 from backend.api.v1.models.events import EventDTO, EventCreateDTO, EventFilterDTO, EventListMetaDTO, EventListDTO
 from backend.api.v1.operations.events import get_events, create_event, get_event, delete_event
-from backend.db import db
-from backend.db.models import EventModel, UserModel, ThemeModel
 
 
 class EventsModule(MethodView):
@@ -16,6 +14,8 @@ class EventsModule(MethodView):
     @jwt_required
     def get(self):
         filters = EventFilterDTO.from_query_params(request.args)
+        print(request.args)
+        print(filters)
         filtered_events = get_events(filters)
         events_total_count = Constructor().events.count()
 

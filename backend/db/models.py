@@ -10,24 +10,12 @@ event_theme = db.Table(
     db.Column('theme_id', db.Integer, db.ForeignKey('themes.id')),
     db.Column('event_id', db.Integer, db.ForeignKey('events.id'))
 )
-#
-# class EventThemeModel(db.Model):
-#     __tablename__ = 'event_themes'
-#
-#     theme_id = db.Column(db.Integer, db.ForeignKey('themes.id'), primary_key=True)
-#     event_id = db.Column(db.Integer, db.ForeignKey('events.id'), primary_key=True)
-#
-#     theme = db.relationship(
-#         'ThemeModel',
-#         lazy='subquery',
-#         backref=db.backref('event', lazy=True)
-#     )
-#
-#     event = db.relationship(
-#         "EventModel",
-#         uselist=False,
-#         lazy="subquery",
-#     )
+
+filter_theme = db.Table(
+    'filter_theme',
+    db.Column('theme_id', db.Integer, db.ForeignKey('themes.id')),
+    db.Column('filter_id', db.Integer, db.ForeignKey('filters.id'))
+)
 
 
 class EventModel(db.Model):
@@ -88,3 +76,14 @@ class CityModel(db.Model):
     id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
     alias = db.Column(db.Text, nullable=False)
     name = db.Column(db.Text, nullable=False)
+
+
+class FilterModel(db.Model):
+    __tablename__ = 'filters'
+
+    id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.BigInteger, db.ForeignKey('users.id'), nullable=False)
+    city_id = db.Column(db.BigInteger, db.ForeignKey('cities.id'), nullable=False)
+    themes = relationship('ThemeModel', secondary=filter_theme, backref='filters')
+    start_at = db.Column(db.DateTime, nullable=True)
+    end_at = db.Column(db.DateTime, nullable=True)

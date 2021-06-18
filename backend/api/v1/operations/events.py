@@ -46,8 +46,8 @@ def delete_event(event_id) -> None:
 
 
 def _get_filtered_events(events: EventQueryConstructor, filters):
-    if filters.theme_id:
-        events = events.filter_theme(filters.theme_id)
+    if filters.theme_ids:
+        events = events.filter_theme(filters.theme_ids)
     if filters.city_id:
         events = events.filter_city(filters.city_id)
     if filters.start or filters.end:

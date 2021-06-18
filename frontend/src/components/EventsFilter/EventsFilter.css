@@ -1,0 +1,29 @@
+.filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filters__city {
+    width: 220px;
+}
+
+.filters__datetime {
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+}
+
+.filters__start,
+.filters__end {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filters__add_theme {
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}

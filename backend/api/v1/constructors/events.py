@@ -27,8 +27,8 @@ class EventQueryConstructor:
         self._query = self._query.filter(EventModel.city_id == city_id)
         return self
 
-    def filter_theme(self, theme_id: int) -> EventQueryConstructor:
-        self._query = self._query.filter(EventModel.themes.any(ThemeModel.id == theme_id))
+    def filter_theme(self, theme_ids: List[int]) -> EventQueryConstructor:
+        self._query = self._query.filter(EventModel.themes.any(ThemeModel.id.in_(theme_ids)))
         return self
 
     def filter_dates(self, start: datetime, end: datetime) -> EventQueryConstructor:

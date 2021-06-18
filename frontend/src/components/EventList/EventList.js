@@ -1,28 +1,33 @@
 import React, {useEffect, useState} from 'react';
-import {get_events} from "../../api";
+import {get_cities, get_events, get_themes} from "../../api";
 import Event from "../Event/Event";
 import "./EventList.css"
-import {Link} from "react-router-dom";
+import EventsFilter from "../EventsFilter/EventsFilter";
 
 const EventList = () => {
 	const [events, setEvents] = useState(null)
+	const [filters, setFilters] = useState()
 
 	useEffect(() => {
-		get_events().then(data => {
+		get_events(filters).then(data => {
 			setEvents(data.items)
 		})
-	}, [])
+	}, [filters])
 
 	if (events?.length === 0) {
 		return (
-			<div>
-				Events not exist
-			</div>
+			<>
+				<EventsFilter filters={filters} setFilters={setFilters}/>
+				<div>
+					Events not exist
+				</div>
+			</>
 		)
 	}
 
 	return (
 		<>
+			<EventsFilter filters={filters} setFilters={setFilters}/>
 			<ul className='event_list'>
 				{
 					events?.map((event, i) => (
