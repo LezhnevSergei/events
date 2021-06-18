@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {get_cities, get_events, get_themes} from "../../api";
+import {get_events} from "../../api";
 import Event from "../Event/Event";
 import "./EventList.css"
 import EventsFilter from "../EventsFilter/EventsFilter";

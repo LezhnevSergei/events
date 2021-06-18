@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {get_cities, get_themes} from "../../api";
+import {get_cities, get_filters, get_themes, save_filter} from "../../api";
 import "./EventsFilter.css"
 import DateTimePicker from "react-datetime-picker";
+import moment from "moment/moment";
 
 const EventsFilter = ({filters, setFilters}) => {
+	const [savedFilters, setSavedFilters] = useState([])
 	const [themes, setThemes] = useState([])
 	const [cities, setCities] = useState([])
 	const [themeCount, setThemeCount] = useState(1)
@@ -15,7 +17,14 @@ const EventsFilter = ({filters, setFilters}) => {
 		get_cities().then(cities => {
 			setCities(cities)
 		})
+		get_filters().then(filters => {
+			setSavedFilters(filters)
+		})
 	}, [])
+
+	const saveFilterHandler = () => {
+		save_filter(filters)
+	}
 
 	return (
 		<div className="filters">
@@ -29,7 +38,7 @@ const EventsFilter = ({filters, setFilters}) => {
 							return
 						}
 						const city_id = Number(event.target.value)
-						setFilters({city_id})
+						setFilters(prev => ({...filters, city_id}))
 					}}
 				>
 					<option
@@ -44,6 +53,7 @@ const EventsFilter = ({filters, setFilters}) => {
 								<option
 									key={city.id}
 									value={city.id}
+									selected={city.id === filters?.city_id}
 								>
 									{city.name}
 								</option>
@@ -76,7 +86,7 @@ const EventsFilter = ({filters, setFilters}) => {
 
 									if (event.target.value === "all") {
 										theme_ids = []
-										setFilters({...filters, theme_ids: theme_ids})
+										setFilters({...filters, theme_ids})
 										return
 									}
 									if (theme_ids?.length) {
@@ -104,6 +114,7 @@ const EventsFilter = ({filters, setFilters}) => {
 											<option
 												key={theme.id}
 												value={theme.id}
+												selected={filters?.theme_ids?.includes(theme.id)}
 											>
 												{theme.name}
 											</option>
@@ -135,6 +146,73 @@ const EventsFilter = ({filters, setFilters}) => {
 					/>
 				</div>
 
+			</div>
+
+			<div className="filters__saved_filters">
+				Filters:
+				<select
+					className="filters__saved_filters_select"
+					onChange={(event) => {
+						if (event.target.value === "null") {
+							setFilters({})
+							return
+						}
+						const filter_id = Number(event.target.value)
+						const saved_filter = savedFilters.filter(filter => filter.id === filter_id)[0]
+						if (saved_filter.start_at) {
+							saved_filter.start_at = moment(saved_filter.start_at, "DDD MMM YYYY HH:mm:ss").toDate()
+						}
+
+						if (saved_filter.end_at)
+							saved_filter.end_at = moment(saved_filter.end_at, "DDD MMM YYYY HH:mm:ss").toDate()
+
+						setFilters(saved_filter)
+					}}
+				>
+					<option
+						key={0}
+						value="null"
+					>
+					</option>
+					{
+						savedFilters?.map(filter => {
+							const themes_ = themes.filter(theme => filter.theme_ids.includes(theme.id))
+							const themes_str = themes_.map(theme => theme.name).join(', ')
+							const city = cities.filter(city => city.id === filter.city_id)[0]
+							let result = []
+							if (city?.name) {
+								result.push(`City ${city?.name}`)
+							}
+							if (themes_str) {
+								result.push(`Themes ${themes_str}`)
+							}
+
+							if (filter.start_at) {
+								result.push(`Start ${filter.start_at}`)
+							}
+
+							if (filter.end_at) {
+								result.push(`End ${filter.end_at}`)
+							}
+
+							return (
+								<option
+									key={filter.id}
+									value={filter.id}
+								>
+									{result.join(', ')}
+								</option>
+							)
+						})
+					}
+				</select>
+			</div>
+
+			<div
+				className="filters__save_filter"
+				onClick={saveFilterHandler}
+			>
+				Save
 			</div>
 		</div>
 	);

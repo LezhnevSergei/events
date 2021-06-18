@@ -83,7 +83,7 @@ class FilterModel(db.Model):
 
     id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
     user_id = db.Column(db.BigInteger, db.ForeignKey('users.id'), nullable=False)
-    city_id = db.Column(db.BigInteger, db.ForeignKey('cities.id'), nullable=False)
+    city_id = db.Column(db.BigInteger, db.ForeignKey('cities.id'), nullable=True)
     themes = relationship('ThemeModel', secondary=filter_theme, backref='filters')
     start_at = db.Column(db.DateTime, nullable=True)
     end_at = db.Column(db.DateTime, nullable=True)

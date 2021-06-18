@@ -6,6 +6,7 @@ const API_URL_BASE = 'http://127.0.0.1:5000/api/v1/'
 const API_URL_EVENTS = API_URL_BASE + 'events/'
 const API_URL_THEMES = API_URL_BASE + 'themes/'
 const API_URL_CITIES = API_URL_BASE + 'cities/'
+const API_URL_FILTERS = API_URL_BASE + 'filters/'
 
 const getConfig = () => {
 	const identity = JSON.parse(localStorage.getItem('identity'))
@@ -93,6 +94,20 @@ export const get_cities = async () => {
 
 export const create_event = async (data) => {
 	return await axios.post(API_URL_EVENTS, data, getConfig()).then(response => {
+		const data = response.data
+		return data
+	})
+}
+
+export const save_filter = async (filter) => {
+	return await axios.post(API_URL_FILTERS, filter, getConfig()).then(response => {
+		const data = response.data
+		return data
+	})
+}
+
+export const get_filters = async () => {
+	return await axios.get(API_URL_FILTERS, getConfig()).then(response => {
 		const data = response.data
 		return data
 	})

@@ -5,7 +5,7 @@
 }
 
 .filters__city {
-    width: 220px;
+    width: 170px;
 }
 
 .filters__datetime {
@@ -26,4 +26,18 @@
     margin-left: 5px;
     margin-right: 5px;
     cursor: pointer;
+}
+
+.filters__save_filter {
+    height: 75px;
+    width: 100px;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.filters__saved_filters_select {
+    width: 160px;
 }

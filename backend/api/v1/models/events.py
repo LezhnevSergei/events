@@ -92,11 +92,18 @@ class FilterDTO(BaseModel):
     @classmethod
     def from_model(cls, filter: FilterModel):
         theme_ids = [theme.id for theme in filter.themes]
+        start_at = None
+        if filter.start_at:
+            start_at = filter.start_at.strftime('%d-%m-%Y %H:%M:%S')
+
+        end_at = None
+        if filter.end_at:
+            end_at = filter.start_at.strftime('%d-%m-%Y %H:%M:%S')
 
         return cls(
             id=filter.id,
-            start_at=filter.start_at.strftime('%d-%m-%Y %H:%M:%S'),
-            end_at=filter.end_at.strftime('%d-%m-%Y %H:%M:%S'),
+            start_at=start_at,
+            end_at=end_at,
             theme_ids=theme_ids,
             city_id=filter.city_id or None,
             user_id=filter.user_id or None,
@@ -104,8 +111,8 @@ class FilterDTO(BaseModel):
 
     id: int
     user_id: int
-    city_id: int
-    theme_ids: List[int]
+    city_id: Optional[int]
+    theme_ids: Optional[List[int]]
     start_at: Optional[str]
     end_at: Optional[str]
 
