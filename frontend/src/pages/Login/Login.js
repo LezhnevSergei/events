@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import {login as loginMethod} from "../../api";
+import "./Login.css"
 
 const Login = () => {
 	const [login, setLogin] = useState(null)
@@ -20,23 +21,31 @@ const Login = () => {
 
 	return (
 		<div className="page_login">
-			Login Page
-			login:
-			<input
-				type='text'
-				onChange={event => setLogin(event.target.value)}
-			/>
-			password:
-			<input
-				type='password'
-				onChange={event => setPassword(event.target.value)}
-			/>
+			<div className="page_login__heading">
+				Login page
+			</div>
+			<div className="page_login__inputs">
+				login:
+				<input
+					type='text'
+					onChange={event => setLogin(event.target.value)}
+				/>
+				password:
+				<input
+					type='password'
+					onChange={event => setPassword(event.target.value)}
+				/>
+			</div>
+
 			<button
+				className='page_login__button'
 				onClick={loginHandler}
-			/>
-			<Link to='/register'>Sign Up</Link>
+			>
+				login
+			</button>
+			<Link to='/register' className='page_login__sign_up_link'>Sign Up</Link>
 		</div>
-);
+	);
 };
 
 export default Login;

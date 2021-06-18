@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {register} from "../../api";
-import {useHistory} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 
 const Register = () => {
 	const [login, setLogin] = useState(null)
@@ -15,25 +15,35 @@ const Register = () => {
 
 	return (
 		<div className="page_login">
-			Register Page
-			login:
-			<input
-				type='text'
-				onChange={event => setLogin(event.target.value)}
-			/>
-			email:
-			<input
-				type='email'
-				onChange={event => setEmail(event.target.value)}
-			/>
-			password:
-			<input
-				type='password'
-				onChange={event => setPassword(event.target.value)}
-			/>
+			<div className="page_login__heading">
+				Register Page
+			</div>
+			<div className="page_login__inputs">
+				login:
+				<input
+					type='text'
+					onChange={event => setLogin(event.target.value)}
+				/>
+				email:
+				<input
+					type='email'
+					onChange={event => setEmail(event.target.value)}
+				/>
+				password:
+				<input
+					type='password'
+					onChange={event => setPassword(event.target.value)}
+				/>
+			</div>
+
 			<button
+				type='submit'
+				className='page_login__button'
 				onClick={registerHandler}
-			/>
+			>
+				Register
+			</button>
+			<Link to='/login' className='page_login__sign_up_link'>Login</Link>
 		</div>
 	);
 };

@@ -1,7 +1,7 @@
-from typing import List, Tuple, Optional
+from typing import List, Optional
 
 from backend.api.v1.constructors import Constructor, EventQueryConstructor
-from backend.api.v1.models.events import EventFilterDTO, EventListDTO, EventDTO, EventListMetaDTO, EventCreateDTO
+from backend.api.v1.models.events import EventFilterDTO, EventCreateDTO
 from backend.db import db
 from backend.db.models import EventModel, ThemeModel
 

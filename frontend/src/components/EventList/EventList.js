@@ -14,6 +14,8 @@ const EventList = () => {
 		})
 	}, [filters])
 
+	console.log(events);
+
 	if (events?.length === 0) {
 		return (
 			<>

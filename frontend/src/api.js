@@ -109,6 +109,7 @@ export const save_filter = async (filter) => {
 export const get_filters = async () => {
 	return await axios.get(API_URL_FILTERS, getConfig()).then(response => {
 		const data = response.data
+		console.log(data);
 		return data
 	})
 }

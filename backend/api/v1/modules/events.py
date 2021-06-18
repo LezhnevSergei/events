@@ -14,8 +14,6 @@ class EventsModule(MethodView):
     @jwt_required
     def get(self):
         filters = EventFilterDTO.from_query_params(request.args)
-        print(request.args)
-        print(filters)
         filtered_events = get_events(filters)
         events_total_count = Constructor().events.count()
 

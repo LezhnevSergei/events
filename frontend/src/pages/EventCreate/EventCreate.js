@@ -49,6 +49,7 @@ const EventCreate = () => {
 							setFields({...fields, start_at: date})
 						}}
 						value={fields.start_at}
+						dateFormat={"DD-MM-YYYY hh:mm:ss"}
 					/>
 				</div>
 				<div className="create_event__end_at">
@@ -58,6 +59,7 @@ const EventCreate = () => {
 							setFields({...fields, end_at: date})
 						}}
 						value={fields.end_at}
+						dateFormat={"DD-MM-YYYY hh:mm:ss"}
 					/>
 				</div>
 				<div className="create_event__themes">
@@ -127,6 +129,7 @@ const EventCreate = () => {
 					className="create_event__button"
 					onClick={() => {
 						fields.theme_ids = Array.from(new Set(fields.theme_ids))
+						console.log(fields);
 						create_event(fields)
 						history.push('/')
 					}}

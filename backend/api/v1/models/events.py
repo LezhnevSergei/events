@@ -98,15 +98,15 @@ class FilterDTO(BaseModel):
 
         end_at = None
         if filter.end_at:
-            end_at = filter.start_at.strftime('%d-%m-%Y %H:%M:%S')
+            end_at = filter.end_at.strftime('%d-%m-%Y %H:%M:%S')
 
         return cls(
             id=filter.id,
             start_at=start_at,
             end_at=end_at,
             theme_ids=theme_ids,
-            city_id=filter.city_id or None,
-            user_id=filter.user_id or None,
+            city_id=filter.city_id,
+            user_id=filter.user_id,
         )
 
     id: int

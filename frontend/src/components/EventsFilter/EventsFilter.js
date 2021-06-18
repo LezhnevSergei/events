@@ -26,6 +26,8 @@ const EventsFilter = ({filters, setFilters}) => {
 		save_filter(filters)
 	}
 
+	console.log(filters);
+
 	return (
 		<div className="filters">
 			<div className="filters__city">
@@ -94,7 +96,7 @@ const EventsFilter = ({filters, setFilters}) => {
 									} else {
 										theme_ids = [theme_id]
 									}
-									setFilters({...filters, theme_ids})
+									setFilters(prev => ({...filters, theme_ids}))
 								}}
 							>
 								{
@@ -134,6 +136,7 @@ const EventsFilter = ({filters, setFilters}) => {
 							setFilters({...filters, start_at: date})
 						}}
 						value={filters?.start_at}
+						dateFormat={"DD-MM-YYYY hh:mm:ss"}
 					/>
 				</div>
 				<div className="filters__end">
@@ -143,6 +146,7 @@ const EventsFilter = ({filters, setFilters}) => {
 							setFilters({...filters, end_at: date})
 						}}
 						value={filters?.end_at}
+						dateFormat={"DD-MM-YYYY hh:mm:ss"}
 					/>
 				</div>
 
@@ -160,12 +164,12 @@ const EventsFilter = ({filters, setFilters}) => {
 						const filter_id = Number(event.target.value)
 						const saved_filter = savedFilters.filter(filter => filter.id === filter_id)[0]
 						if (saved_filter.start_at) {
-							saved_filter.start_at = moment(saved_filter.start_at, "DDD MMM YYYY HH:mm:ss").toDate()
+							saved_filter.start_at = moment(saved_filter.start_at, "DD-MM-YYYY hh:mm:ss").toDate()
 						}
 
 						if (saved_filter.end_at)
-							saved_filter.end_at = moment(saved_filter.end_at, "DDD MMM YYYY HH:mm:ss").toDate()
-
+							saved_filter.end_at = moment(saved_filter.end_at, "DD-MM-YYYY hh:mm:ss").toDate()
+						console.log(saved_filter);
 						setFilters(saved_filter)
 					}}
 				>

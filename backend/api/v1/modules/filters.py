@@ -16,14 +16,17 @@ class FiltersModule(MethodView):
     def get(self):
         user_id = get_jwt_identity()
         filter_models = Constructor().filters.by_user(user_id).all()
-        filters = [FilterDTO.from_model(theme).dict() for theme in filter_models]
+        filters = [FilterDTO.from_model(filter).dict() for filter in filter_models]
 
         return jsonify(filters)
 
     @jwt_required
     def post(self):
         user_id = get_jwt_identity()
-        themes = Constructor().themes.ids(request.get_json().get('theme_ids')).all()
+        theme_ids = request.get_json().get('theme_ids')
+        themes = []
+        if theme_ids:
+            themes = Constructor().themes.ids(theme_ids).all()
         filter = FilterModel(
             user_id=user_id,
             city_id=request.get_json().get('city_id'),
