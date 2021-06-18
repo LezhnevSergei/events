@@ -55,11 +55,12 @@ export const get_events = async (filters) => {
 			if (url[url.length - 1] !== "?" && filters?.theme_ids?.length) {
 				url += "&"
 			}
-
+			console.log(filters.start_at);
 			let start_at = new Date(filters.start_at)
+			console.log(start_at)
 			const year = start_at.getFullYear()
-			const day = start_at.getDay()
-			const month = start_at.getMonth()
+			const day = start_at.getDate()
+			const month = start_at.getMonth() + 1
 			const hours = start_at.getHours()
 			const minutes = start_at.getMinutes()
 			const seconds = start_at.getSeconds()
@@ -72,9 +73,10 @@ export const get_events = async (filters) => {
 			}
 
 			let end_at = new Date(filters.end_at)
+			console.log(end_at);
 			const year = end_at.getFullYear()
-			const day = end_at.getDay()
-			const month = end_at.getMonth()
+			const day = end_at.getDate()
+			const month = end_at.getMonth() + 1
 			const hours = end_at.getHours()
 			const minutes = end_at.getMinutes()
 			const seconds = end_at.getSeconds()
