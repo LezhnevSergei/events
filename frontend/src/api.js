@@ -55,33 +55,19 @@ export const get_events = async (filters) => {
 			if (url[url.length - 1] !== "?" && filters?.theme_ids?.length) {
 				url += "&"
 			}
-			console.log(filters.start_at);
-			let start_at = new Date(filters.start_at)
-			console.log(start_at)
-			const year = start_at.getFullYear()
-			const day = start_at.getDate()
-			const month = start_at.getMonth() + 1
-			const hours = start_at.getHours()
-			const minutes = start_at.getMinutes()
-			const seconds = start_at.getSeconds()
 
-			url += 'start=' + `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`
+			const start_at = new Date(filters.start_at)
+
+			url += 'start=' + get_formated_datetime_string(start_at)
 		}
 		if (filters?.end_at) {
 			if (url[url.length - 1] !== "?" && filters?.start_at) {
 				url += "&"
 			}
 
-			let end_at = new Date(filters.end_at)
-			console.log(end_at);
-			const year = end_at.getFullYear()
-			const day = end_at.getDate()
-			const month = end_at.getMonth() + 1
-			const hours = end_at.getHours()
-			const minutes = end_at.getMinutes()
-			const seconds = end_at.getSeconds()
+			const end_at = new Date(filters.end_at)
 
-			url += 'end=' + `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`
+			url += 'end=' + get_formated_datetime_string(end_at)
 		}
 	}
 
@@ -110,4 +96,16 @@ export const create_event = async (data) => {
 		const data = response.data
 		return data
 	})
+}
+
+
+const get_formated_datetime_string = (date) => {
+	const year = date.getFullYear()
+	const day = date.getDate()
+	const month = date.getMonth() + 1
+	const hours = date.getHours()
+	const minutes = date.getMinutes()
+	const seconds = date.getSeconds()
+
+	return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`
 }
