@@ -33,9 +33,9 @@ class EventQueryConstructor:
 
     def filter_dates(self, start: datetime, end: datetime) -> EventQueryConstructor:
         if start:
-            self._query = self._query.filter(EventModel.start_at > start)
+            self._query = self._query.filter(EventModel.start_at >= start)
         if end:
-            self._query = self._query.filter(EventModel.end_at < end)
+            self._query = self._query.filter(EventModel.end_at <= end)
         return self
 
     def order_by_date(self) -> EventQueryConstructor:
