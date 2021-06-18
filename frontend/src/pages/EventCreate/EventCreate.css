@@ -1,0 +1,25 @@
+.create_event {
+    width: 800px;
+    height: 200px;
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.create_event__name,
+.create_event__start_at,
+.create_event__end_at,
+.create_event__themes,
+.create_event__city {
+    width: 250px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.create_event__select {
+    width: 185px;
+}
+

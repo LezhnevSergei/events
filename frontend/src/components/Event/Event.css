@@ -1,0 +1,24 @@
+.event_list__event {
+    width: 300px;
+    background-color: #fff;
+    margin-right: 25px;
+    padding: 10px;
+    margin-bottom: 20px;
+
+    word-wrap: break-word;
+}
+
+.event_list__event:nth-child(3n) {
+    margin-right: 0;
+}
+
+.event_list__event:hover {
+    background-color: #ddfff3;
+}
+
+.event__row {
+    margin-bottom: 5px;
+}
+
+.event__name {
+}

@@ -38,6 +38,10 @@ class EventQueryConstructor:
             self._query = self._query.filter(EventModel.end_at < end)
         return self
 
+    def order_by_date(self) -> EventQueryConstructor:
+        self._query = self._query.order_by(EventModel.created_at.desc())
+        return self
+
     def restrict(self, limit: int = None, offset: int = None) -> EventQueryConstructor:
         if limit:
             self._query = self._query.limit(limit)

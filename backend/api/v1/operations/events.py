@@ -12,7 +12,7 @@ def get_events(filters: Optional[EventFilterDTO] = None) -> List[EventModel]:
     if filters is not None:
         events = _get_filtered_events(events=events, filters=filters)
 
-    events = events.all()
+    events = events.order_by_date().all()
 
     return events
 
